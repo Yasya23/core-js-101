@@ -265,9 +265,7 @@ function reverseInteger(num) {
  *   5436468789016589 => false
  *   4916123456789012 => false
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
-}
+function isCreditCardNumber(/* ccn */) {}
 
 /**
  * Returns the digital root of integer:
@@ -309,8 +307,26 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  const open = ['[', '(', '{', '<'];
+  const close = [']', ')', '}', '>'];
+  const stack = [];
+
+  for (let i = 0; i < str.length; i += 1) {
+    const bracket = str[i];
+
+    if (open.includes(bracket)) {
+      stack.push(bracket);
+    } else if (close.includes(bracket)) {
+      const lastOpenBracket = stack.pop();
+
+      if (open.indexOf(lastOpenBracket) !== close.indexOf(bracket)) {
+        return false;
+      }
+    }
+  }
+
+  return stack.length === 0;
 }
 
 /**
@@ -349,8 +365,21 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const arr = pathes.map((path) => path.split('/'));
+  let result = '';
+
+  for (let i = 0; i < arr[0].length; i += 1) {
+    const currentPart = arr[0][i];
+
+    if (arr.every((path) => path[i] === currentPart)) {
+      result += `${currentPart}/`;
+    } else {
+      break;
+    }
+  }
+
+  return result;
 }
 
 /**
